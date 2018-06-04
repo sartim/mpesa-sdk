@@ -30,31 +30,28 @@ class Gateway:
         self.timeout = timeout
 
     def make_request(self, url, payload, method):
-
         """Invoke url and return a python request object"""
-
         if self.timeout:
             return requests.request(method, url, headers=self.headers, json=payload, timeout=self.timeout)
         else:
             return requests.request(method, url, headers=self.headers, json=payload)
 
     def b2b_payment_request(self, data):
-
         """Mpesa Transaction from one company to another.
 
         https://developer.safaricom.co.ke/b2b/apis/post/paymentrequest
         """
-
         expected_keys = ["Initiator", "SecurityCredential",
                          "CommandID", "SenderIdentifierType",
                          "RecieverIdentifierType", "Amount",
                          "PartyA", "PartyB", "AccountReference",
                          "Remarks", "QueueTimeOutURL", "ResultURL"]
         payload = process_data(expected_keys, data)
-        r = self.make_request(URL[self.env][self.version]["b2b_payment_request"],
-                                     payload, "POST")
+        url = URL[self.env][self.version]["b2b_payment_request"]
+        r = self.make_request(url, payload, "POST")
+        if r.status_code != 200:
+            logger.error("B2B payment request has not been completed")
         response = r.json()
-
         return response
 
     def b2c_payment_request(self, data):
@@ -73,9 +70,9 @@ class Gateway:
         payload = process_data(expected_keys, data)
         url = URL[self.env][self.version]["b2c_payment_request"]
         r = self.make_request(url, payload, "POST")
-
+        if r.status_code != 200:
+            logger.error("B2C payment request has not been completed")
         response = r.json()
-
         return response
 
     def c2b_register_url(self, data):
@@ -89,8 +86,9 @@ class Gateway:
         payload = process_data(expected_keys, data)
         url = URL[self.env][self.version]["c2b_register_url"]
         r = self.make_request(url, payload, "POST")
+        if r.status_code != 200:
+            logger.error("C2B register url request has not been completed")
         response = r.json()
-
         return response
 
     def c2b_simulate_transaction(self, data):
@@ -109,8 +107,9 @@ class Gateway:
         payload["CommandID"] = "CustomerPayBillOnline"
         url = URL[self.env][self.version]["c2b_simulate_transaction"]
         r = self.make_request(url, payload, "POST")
+        if r.status_code != 200:
+            logger.error("C2B simulate transaction request has not been completed")
         response = r.json()
-
         return response
 
     def transation_status_request(self, data):
@@ -129,6 +128,8 @@ class Gateway:
         payload["IdentifierType"] = "1"
         r = self.make_request(
             URL[self.env][self.version]["transation_status_request"], payload, "POST")
+        if r.status_code != 200:
+            logger.error("Transaction status request has not been completed")
         response = r.json()
 
         return response
@@ -145,9 +146,11 @@ class Gateway:
         payload = process_data(expected_keys, data)
         payload["CommandID"] = "AccountBalance"
         payload["IdentifierType"] = "4"
-        response = self.make_request(
+        r = self.make_request(
             URL[self.env][self.version]["account_balance_request"], payload, "POST")
-
+        if r.status_code != 200:
+            logger.error("Account balance request has not been completed")
+        response = r.json()
         return response
 
     def reversal_request(self, data):
@@ -164,11 +167,11 @@ class Gateway:
         payload = process_data(expected_keys, data)
         payload["CommandID"] = "TransactionReversal"
         payload["RecieverIdentifierType"] = "4"
-        response = self.make_request(
+        r = self.make_request(
             URL[self.env][self.version]["reversal_request"], payload, "POST")
-
-        logger.info('Success: %s' % (response))
-
+        if r.status_code != 200:
+            logger.error("Reversal request has not been completed")
+        response = r.json()
         return response
 
     def lipa_na_mpesa_online_query(self, data):
@@ -183,6 +186,8 @@ class Gateway:
         payload["Timestamp"] = generate_timestamp()
         url = URL[self.env][self.version]["lipa_na_mpesa_online_query"]
         r = self.make_request(url, payload, "POST")
+        if r.status_code != 200:
+            logger.error("M-Pesa express query request has not been completed")
         response = r.json()
 
         return response
@@ -203,11 +208,11 @@ class Gateway:
         payload = process_data(expected_keys, data)
         payload["Timestamp"] = generate_timestamp()
         payload["TransactionType"] = "CustomerPayBillOnline"
-        response = self.make_request(
+        r = self.make_request(
             URL[self.env][self.version]["lipa_na_mpesa_online_payment"], payload, "POST")
-
-        logger.info('Success: %s' % (response))
-
+        if r.status_code != 200:
+            logger.error("M-Pesa express request has not been completed")
+        response = r.json()
         return response
 
 
