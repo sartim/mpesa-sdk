@@ -12,10 +12,10 @@ as text or json.
 import os
 import logging
 import base64
-import requests
-
+import datetime
 from datetime import datetime
-from urls import URL
+import requests
+from mpesa.urls import URL
 
 logger = logging.getLogger()
 
@@ -37,7 +37,8 @@ class Mpesa:
         :return response (obj):
         """
         if self.timeout:
-            return requests.request(method, url, headers=self.headers, json=payload, timeout=self.timeout)
+            return requests.request(method, url, headers=self.headers, json=payload,
+                                    timeout=self.timeout)
         else:
             return requests.request(method, url, headers=self.headers, json=payload)
 
@@ -227,7 +228,8 @@ class Mpesa:
         return response
 
 
-def oauth_generate_token(consumer_key, consumer_secret, grant_type="client_credentials", env="sandbox", version="v1"):
+def oauth_generate_token(consumer_key, consumer_secret, grant_type="client_credentials",
+                         env="sandbox", version="v1"):
     """
     Authenticate your app and return an OAuth access token.
     This token gives you time bound access token to call allowed APIs.
@@ -242,8 +244,8 @@ def oauth_generate_token(consumer_key, consumer_secret, grant_type="client_crede
     :return response:
     """
     response = requests.get(URL[env][version]["oauth_generate_token"],
-                        params=dict(grant_type=grant_type),
-                        auth=requests.auth.HTTPBasicAuth(consumer_key, consumer_secret))
+                            params=dict(grant_type=grant_type),
+                            auth=requests.auth.HTTPBasicAuth(consumer_key, consumer_secret))
     if response.status_code == 200:
         response_ = response.json()
     else:
