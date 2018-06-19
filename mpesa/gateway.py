@@ -22,7 +22,7 @@ logger = logging.getLogger()
 
 class Mpesa:
 
-    def __init__(self, access_token, env=os.environ.get('ENV'), version="v1", timeout=None):
+    def __init__(self, access_token, env, version="v1", timeout=None):
         self.headers = {"Authorization": "Bearer %s" % access_token}
         self.env = env
         self.version = version
