@@ -1,27 +1,61 @@
-URL = {}
+import os
 
-URL["sandbox"] = {}
-URL["sandbox"]["v1"] = {}
-URL["sandbox"]["v1"]["reversal_request"] = "https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request"
-URL["sandbox"]["v1"]["b2c_payment_request"] = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest"
-URL["sandbox"]["v1"]["b2b_payment_request"] = "https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest"
-URL["sandbox"]["v1"]["c2b_register_url"] = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl"
-URL["sandbox"]["v1"]["c2b_simulate_transaction"] = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate"
-URL["sandbox"]["v1"]["transation_status_request"] = "https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query"
-URL["sandbox"]["v1"]["account_balance_request"] = "https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query"
-URL["sandbox"]["v1"]["lipa_na_mpesa_online_query"] = "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query"
-URL["sandbox"]["v1"]["lipa_na_mpesa_online_payment"] = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-URL["sandbox"]["v1"]["oauth_generate_token"] = "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+SANDBOX_BASE_URL = "https://sandbox.safaricom.co.ke"
 
-URL["production"] = {}
-URL["production"]["v1"] = {}
-URL["production"]["v1"]["reversal_request"] = "https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request"
-URL["production"]["v1"]["b2c_payment_request"] = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest"
-URL["production"]["v1"]["b2b_payment_request"] = "https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest"
-URL["production"]["v1"]["c2b_register_url"] = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl"
-URL["production"]["v1"]["c2b_simulate_transaction"] = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate"
-URL["production"]["v1"]["transation_status_request"] = "https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query"
-URL["production"]["v1"]["account_balance_request"] = "https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query"
-URL["production"]["v1"]["lipa_na_mpesa_online_query"] = "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query"
-URL["production"]["v1"]["lipa_na_mpesa_online_payment"] = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-URL["production"]["v1"]["oauth_generate_token"] = "https://sandbox.safaricom.co.ke/oauth/v1/generate"
+
+def get_base_url(env):
+    if env == "sandbox":
+        base_url = SANDBOX_BASE_URL
+    else:
+        base_url = os.environ.get("PROD_URL")
+    return base_url
+
+
+def get_generate_token_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/oauth/v1/generate".format(base_url)
+
+
+def get_reversal_request_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/reversal/v1/request".format(base_url)
+
+
+def get_b2c_payment_request_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/b2c/v1/paymentrequest".format(base_url)
+
+
+def get_b2b_payment_request_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/b2b/v1/paymentrequest".format(base_url)
+
+
+def get_c2b_register_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/c2b/v1/registerurl".format(base_url)
+
+
+def get_c2b_simulate_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/c2b/v1/simulate".format(base_url)
+
+
+def get_transaction_status_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/transactionstatus/v1/query".format(base_url)
+
+
+def get_account_balance_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/accountbalance/v1/query".format(base_url)
+
+
+def get_stk_push_query_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/stkpushquery/v1/query".format(base_url)
+
+
+def get_stk_push_process_url(env="sandbox"):
+    base_url = get_base_url(env)
+    return "{}/mpesa/stkpush/v1/processrequest".format(base_url)
