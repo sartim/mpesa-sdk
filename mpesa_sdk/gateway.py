@@ -15,7 +15,8 @@ import base64
 import datetime
 from datetime import datetime
 import requests
-from mpesa.urls import URL
+
+from mpesa_sdk import urls
 
 logger = logging.getLogger()
 
@@ -37,10 +38,14 @@ class Mpesa:
         :return response (obj):
         """
         if self.timeout:
-            return requests.request(method, url, headers=self.headers, json=payload,
-                                    timeout=self.timeout)
+            return requests.request(
+                method, url, headers=self.headers,
+                json=payload,
+                timeout=self.timeout)
         else:
-            return requests.request(method, url, headers=self.headers, json=payload)
+            return requests.request(
+                method, url, headers=self.headers,
+                json=payload)
 
     def b2b_payment_request(self, data):
         """
@@ -50,18 +55,19 @@ class Mpesa:
         :param data:
         :return response (json):
         """
-        expected_keys = ["Initiator", "SecurityCredential",
-                         "CommandID", "SenderIdentifierType",
-                         "RecieverIdentifierType", "Amount",
-                         "PartyA", "PartyB", "AccountReference",
-                         "Remarks", "QueueTimeOutURL", "ResultURL"]
+        expected_keys = [
+            "Initiator", "SecurityCredential",
+            "CommandID", "SenderIdentifierType",
+            "RecieverIdentifierType", "Amount",
+            "PartyA", "PartyB", "AccountReference",
+            "Remarks", "QueueTimeOutURL", "ResultURL", ]
         payload = process_data(expected_keys, data)
-        url = URL[self.env][self.version]["b2b_payment_request"]
-        r = self.make_request(url, payload, "POST")
-        if r.status_code != 200:
-            logger.error("B2B payment request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_b2b_payment_request_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.warning("B2B payment request has not been completed")
+        return None, 500
 
     def b2c_payment_request(self, data):
         """
@@ -71,37 +77,39 @@ class Mpesa:
         :param data:
         :return response (json):
         """
-        expected_keys = ["InitiatorName", "SecurityCredential",
-                         "CommandID", "Amount", "PartyA",
-                         "PartyB", "Remarks", "QueueTimeOutURL",
-                         "ResultURL", "Occasion"]
+        expected_keys = [
+            "InitiatorName", "SecurityCredential",
+            "CommandID", "Amount", "PartyA",
+            "PartyB", "Remarks", "QueueTimeOutURL",
+            "ResultURL", "Occasion", ]
         payload = process_data(expected_keys, data)
-        url = URL[self.env][self.version]["b2c_payment_request"]
-        r = self.make_request(url, payload, "POST")
-        if r.status_code != 200:
-            logger.error("B2C payment request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_b2c_payment_request_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.warning("B2C payment request has not been completed")
+        return None, 500
 
     def c2b_register_url(self, data):
         """
         C2B Register Url.
         Use this API to register validation and confirmation URLs on M-Pesa.
-        NOTE: This should be registered once. To update the urls registered contact
-        Safaricom which will take some time to be propagated.
+        NOTE: This should be registered once. To update the urls registered
+        contact Safaricom which will take some time to be propagated.
         https://developer.safaricom.co.ke/c2b/apis/post/registerurl
         :param data:
         :return response (json):
         """
-        expected_keys = ["ShortCode", "ResponseType",
-                         "ConfirmationURL", "ValidationURL"]
+        expected_keys = [
+            "ShortCode", "ResponseType",
+            "ConfirmationURL", "ValidationURL"]
         payload = process_data(expected_keys, data)
-        url = URL[self.env][self.version]["c2b_register_url"]
-        r = self.make_request(url, payload, "POST")
-        if r.status_code != 200:
-            logger.error("C2B register url request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_c2b_register_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.warning("C2B register url request has not been completed")
+        return None, 500
 
     def c2b_simulate_transaction(self, data):
         """
@@ -111,16 +119,17 @@ class Mpesa:
         :param data:
         :return response (json):
         """
-        expected_keys = ["ShortCode", "Amount",
-                         "Msisdn"]
+        expected_keys = [
+            "ShortCode", "Amount", "Msisdn"]
         payload = process_data(expected_keys, data)
         payload["CommandID"] = "CustomerPayBillOnline"
-        url = URL[self.env][self.version]["c2b_simulate_transaction"]
-        r = self.make_request(url, payload, "POST")
-        if r.status_code != 200:
-            logger.error("C2B simulate transaction request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_c2b_simulate_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.warning(
+            "C2B simulate transaction request has not been completed")
+        return None, 500
 
     def transation_status_request(self, data):
         """
@@ -130,39 +139,44 @@ class Mpesa:
         :param data:
         :return response (json):
         """
-        expected_keys = ["Initiator", "SecurityCredential",
-                         "TransactionID", "PartyA",
-                         "ResultURL", "QueueTimeOutURL",
-                         "Remarks", "Occasion"]
+        expected_keys = [
+            "Initiator", "SecurityCredential",
+            "TransactionID", "PartyA",
+            "ResultURL", "QueueTimeOutURL",
+            "Remarks", "Occasion"]
         payload = process_data(expected_keys, data)
         payload["CommandID"] = "TransactionStatusQuery"
         payload["IdentifierType"] = "1"
-        r = self.make_request(
-            URL[self.env][self.version]["transation_status_request"], payload, "POST")
-        if r.status_code != 200:
-            logger.error("Transaction status request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_transaction_status_url(self.env)
+        req = self.make_request(
+            url, payload,
+            "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.warning("Transaction status request has not been completed")
+        return None, 500
 
     def account_balance_request(self, data):
         """
         Account Balance Request.
-        Use this API to enquire the balance on an M-Pesa BuyGoods (Till Number).
+        Use this API to enquire the balance on an Mpesa BuyGoods (Till Number).
         https://developer.safaricom.co.ke/account-balance/apis/post/query
         :param data:
         :return response (json):
         """
-        expected_keys = ["Initiator", "SecurityCredential", "PartyA",
-                         "Remarks", "QueueTimeOutURL", "ResultURL"]
+        expected_keys = [
+            "Initiator", "SecurityCredential", "PartyA",
+            "Remarks", "QueueTimeOutURL", "ResultURL"]
         payload = process_data(expected_keys, data)
         payload["CommandID"] = "AccountBalance"
         payload["IdentifierType"] = "4"
-        r = self.make_request(
-            URL[self.env][self.version]["account_balance_request"], payload, "POST")
-        if r.status_code != 200:
-            logger.error("Account balance request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_account_balance_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.warning(
+            "Account balance request has not been completed")
+        return None
 
     def reversal_request(self, data):
         """
@@ -172,64 +186,72 @@ class Mpesa:
         :param data:
         :return response (json):
         """
-        expected_keys = ["Initiator", "SecurityCredential",
-                         "TransactionID", "Amount",
-                         "ReceiverParty", "ResultURL",
-                         "QueueTimeOutURL", "Remarks", "Occasion"]
+        expected_keys = [
+            "Initiator", "SecurityCredential",
+            "TransactionID", "Amount",
+            "ReceiverParty", "ResultURL",
+            "QueueTimeOutURL", "Remarks", "Occasion"]
         payload = process_data(expected_keys, data)
         payload["CommandID"] = "TransactionReversal"
         payload["RecieverIdentifierType"] = "4"
-        r = self.make_request(
-            URL[self.env][self.version]["reversal_request"], payload, "POST")
-        if r.status_code != 200:
-            logger.error("Reversal request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_reversal_request_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            response = req.json()
+            return response, req.status_code
+        logger.warning("Reversal request has not been completed")
+        return None, 500
 
     def lipa_na_mpesa_online_query(self, data):
         """
         Lipa na M-Pesa online query.
         For Lipa Na M-Pesa online payment using STK Push.
-        https://developer.safaricom.co.ke/lipa-na-m-pesa-online/apis/post/stkpushquery/v1/query
+        https://developer.safaricom.co.ke/lipa-na-m-pesa-online/
+            apis/post/stkpushquery/v1/query
         :param data:
         :return response (json):
         """
-        expected_keys = ['BusinessShortCode', 'Password', 'Timestamp', 'CheckoutRequestID']
+        expected_keys = [
+            'BusinessShortCode', 'Password', 'Timestamp',
+            'CheckoutRequestID']
         payload = process_data(expected_keys, data)
         payload["Timestamp"] = generate_timestamp()
-        url = URL[self.env][self.version]["lipa_na_mpesa_online_query"]
-        r = self.make_request(url, payload, "POST")
-        if r.status_code != 200:
-            logger.error("M-Pesa express query request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_stk_push_query_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.warning("Mpesa express query request has not been completed")
+        return None, 500
 
     def lipa_na_mpesa_online_payment(self, data):
         """
         Lipa na M-Pesa online payment
         For Lipa Na M-Pesa online payment using STK Push.
         Use this API to initiate online payment on behalf of a customer.
-        https://developer.safaricom.co.ke/lipa-na-m-pesa-online/apis/post/stkpush/v1/processrequest
+        https://developer.safaricom.co.ke/lipa-na-m-pesa-online/
+            apis/post/stkpush/v1/processrequest
         :param data:
         :return response (json):
         """
-        expected_keys = ["BusinessShortCode", "Password",
-                         "Amount", "PartyA", "PartyB",
-                         "PhoneNumber", "CallBackURL",
-                         "AccountReference", "TransactionDesc"]
+        expected_keys = [
+            "BusinessShortCode", "Password",
+            "Amount", "PartyA", "PartyB",
+            "PhoneNumber", "CallBackURL",
+            "AccountReference", "TransactionDesc"]
         payload = process_data(expected_keys, data)
         payload["Timestamp"] = generate_timestamp()
         payload["TransactionType"] = "CustomerPayBillOnline"
-        r = self.make_request(
-            URL[self.env][self.version]["lipa_na_mpesa_online_payment"], payload, "POST")
-        if r.status_code != 200:
-            logger.error("M-Pesa express request has not been completed")
-        response = r.json()
-        return response
+        url = urls.get_stk_push_process_url(self.env)
+        req = self.make_request(url, payload, "POST")
+        if req:
+            return req.json(), req.status_code
+        logger.error("Mpesa express request has not been completed")
+        return None, 500
 
 
-def oauth_generate_token(consumer_key, consumer_secret, grant_type="client_credentials",
-                         env="sandbox", version="v1"):
+def oauth_generate_token(
+        consumer_key, consumer_secret, grant_type="client_credentials",
+        env="sandbox"):
     """
     Authenticate your app and return an OAuth access token.
     This token gives you time bound access token to call allowed APIs.
@@ -243,16 +265,14 @@ def oauth_generate_token(consumer_key, consumer_secret, grant_type="client_crede
     :param version:
     :return response:
     """
-    response = requests.get(URL[env][version]["oauth_generate_token"],
-                            params=dict(grant_type=grant_type),
-                            auth=requests.auth.HTTPBasicAuth(consumer_key, consumer_secret))
-    if response.status_code == 200:
-        response_ = response.json()
-    else:
-        response_ = {"access_token": ""}
-    logger.info("Generated new token")
-
-    return response
+    url = urls.get_generate_token_url(env)
+    req = requests.get(
+        url, params=dict(grant_type=grant_type),
+        auth=(consumer_key, consumer_secret))
+    if req:
+        return req.json(), req.status_code
+    logger.warning("Token not generated.")
+    return None, 500
 
 
 def encode_password(shortcode, passkey, timestamp):
