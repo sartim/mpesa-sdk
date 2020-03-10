@@ -14,6 +14,13 @@ setup(name='mpesa-sdk',
       license='MIT',
       packages=find_packages(),
       install_requires=[
-          'requests',
+            'python-dotenv',
+            'requests',
+            'tox',
       ],
-      zip_safe=False)
+      zip_safe=False,
+      classifiers=[
+          "Programming Language :: Python :: 2 or 3",
+          "Operating System :: OS Independent",
+        ]
+      )
