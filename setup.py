@@ -1,15 +1,19 @@
-from setuptools import setup
+from setuptools import setup, find_packages
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(name='mpesa-api-sdk',
-      version='0.1',
-      description='M-Pesa API SDK',
-      url='https://github.com/sartim/mpesa-python-sdk',
+      version='1.0.0',
+      description='Mpesa API SDK',
+      long_description=long_description,
+      long_description_content_type="text/markdown",
+      url='https://github.com/sartim/mpesa-sdk',
       author='sartim',
       author_email='sarrtim@gmail.com',
       license='MIT',
-      packages=['mpesa'],
+      packages=find_packages(),
       install_requires=[
           'requests',
       ],
-      dependency_links=['https://github.com/sartim/mpesa-python-sdk/master#egg=package-1.0'],
       zip_safe=False)
