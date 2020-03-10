@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-setup(name='mpesa-api-sdk',
+setup(name='mpesa-sdk',
       version='1.0.0',
       description='Mpesa API SDK',
       long_description=long_description,
