@@ -1,9 +1,13 @@
 name: Publish 🐍 Python Mpesa SDK distribution 📦 to TestPyPI
 
+on:
+  push:
+    branches: [ develop ]
+
 jobs:
   build-n-publish:
     name: Build and publish 🐍 Python Mpesa SDK distribution 📦 to TestPyPI
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - name: Set up Python 3.7
