@@ -1,5 +1,8 @@
 **MPESA REST API Python SDK**
 
+[![Language](https://img.shields.io/badge/language-python-green.svg)](https://github.com/sartim/flask_shop_api)
+![Build Status](https://github.com/sartim/mpesa-sdk/workflows/Publish%20Python%20Mpesa%20SDK%20distribution%20to%20PyPI/badge.svg)
+
 Simple to use helper sdk for Python developers seeking to integrate MPESA API without much hustle.
 Supports Python 2 & 3. 
 
