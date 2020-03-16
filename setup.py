@@ -10,7 +10,6 @@ setup(name='mpesa-sdk',
       long_description_content_type="text/markdown",
       url='https://github.com/sartim/mpesa-sdk',
       author='sartim',
-      author_email='sarrtim@gmail.com',
       license='MIT',
       packages=find_packages(),
       install_requires=[
