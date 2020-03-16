@@ -1,15 +1,17 @@
 from setuptools import setup, find_packages
+from version import VERSION
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='mpesa-sdk',
-      version='1.0.0',
+      version=VERSION,
       description='Mpesa API SDK',
       long_description=long_description,
       long_description_content_type="text/markdown",
       url='https://github.com/sartim/mpesa-sdk',
       author='sartim',
+      author_email='write2sartim@gmail.com',
       license='MIT',
       packages=find_packages(),
       install_requires=[
@@ -19,7 +21,22 @@ setup(name='mpesa-sdk',
       ],
       zip_safe=False,
       classifiers=[
-          "Programming Language :: Python :: 2 or 3",
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: MIT License",
           "Operating System :: OS Independent",
-        ]
-      )
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 2",
+          "Programming Language :: Python :: 2.6",
+          "Programming Language :: Python :: 2.7",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.2",
+          "Programming Language :: Python :: 3.3",
+          "Programming Language :: Python :: 3.4",
+          "Programming Language :: Python :: 3.5",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Software Development :: Libraries :: Python Modules",
+      ]
+)
