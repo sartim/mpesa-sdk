@@ -13,4 +13,4 @@ class TestGenerateToken(BaseTest):
             env="sandbox")
         assert result is not None
         assert status_code == 200
-        assert "access_token" in result.json()
+        assert "access_token" in result

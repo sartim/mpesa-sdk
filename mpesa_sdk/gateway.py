@@ -24,7 +24,7 @@ logger = logging.getLogger()
 class Mpesa:
 
     def __init__(self, access_token, env, version="v1", timeout=None):
-        self.headers = {"Authorization": "Bearer %s" % access_token}
+        self.headers = {"Authorization": "Bearer {}".format(access_token)}
         self.env = env
         self.version = version
         self.timeout = timeout
@@ -67,7 +67,7 @@ class Mpesa:
         if req:
             return req.json(), req.status_code
         logger.warning("B2B payment request has not been completed")
-        return None, 500
+        return {"message": "Request was not completed"}, 500
 
     def b2c_payment_request(self, data):
         """
@@ -88,7 +88,7 @@ class Mpesa:
         if req:
             return req.json(), req.status_code
         logger.warning("B2C payment request has not been completed")
-        return None, 500
+        return {"message": "Request was not completed"}, 500
 
     def c2b_register_url(self, data):
         """
@@ -109,7 +109,7 @@ class Mpesa:
         if req:
             return req.json(), req.status_code
         logger.warning("C2B register url request has not been completed")
-        return None, 500
+        return {"message": "Request was not completed"}, 500
 
     def c2b_simulate_transaction(self, data):
         """
@@ -129,7 +129,7 @@ class Mpesa:
             return req.json(), req.status_code
         logger.warning(
             "C2B simulate transaction request has not been completed")
-        return None, 500
+        return {"message": "Request was not completed"}, 500
 
     def transation_status_request(self, data):
         """
@@ -154,7 +154,7 @@ class Mpesa:
         if req:
             return req.json(), req.status_code
         logger.warning("Transaction status request has not been completed")
-        return None, 500
+        return {"message": "Request was not completed"}, 500
 
     def account_balance_request(self, data):
         """
@@ -176,7 +176,7 @@ class Mpesa:
             return req.json(), req.status_code
         logger.warning(
             "Account balance request has not been completed")
-        return None
+        return {"message": "Request was not completed"}, 500
 
     def reversal_request(self, data):
         """
@@ -200,7 +200,7 @@ class Mpesa:
             response = req.json()
             return response, req.status_code
         logger.warning("Reversal request has not been completed")
-        return None, 500
+        return {"message": "Request was not completed"}, 500
 
     def lipa_na_mpesa_online_query(self, data):
         """
@@ -221,7 +221,7 @@ class Mpesa:
         if req:
             return req.json(), req.status_code
         logger.warning("Mpesa express query request has not been completed")
-        return None, 500
+        return {"message": "Request was not completed"}, 500
 
     def lipa_na_mpesa_online_payment(self, data):
         """
@@ -272,7 +272,7 @@ def oauth_generate_token(
     if req:
         return req.json(), req.status_code
     logger.warning("Token not generated.")
-    return None, 500
+    return {"message": "Request was not completed"}, 500
 
 
 def encode_password(shortcode, passkey, timestamp):
