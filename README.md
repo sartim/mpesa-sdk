@@ -1,4 +1,4 @@
-**MPESA REST API Python SDK**
+**MPESA REST SDK**
 
 [![Language](https://img.shields.io/badge/language-python-green.svg)](https://github.com/sartim/flask_shop_api)
 ![Build Status](https://github.com/sartim/mpesa-sdk/workflows/Publish%20Python%20Mpesa%20SDK%20distribution%20to%20PyPI/badge.svg)
@@ -12,11 +12,11 @@ To generate access token use your client and secret from M-Pesa api account and 
 
 ***Installation***
 
-    $ pip install mpesa-api-sdk
+    $ pip install mpesa-sdk
 
 **Usage**
 
-    from mpesa.gateway import Mpesa
+    from mpesa_sdk.gateway import Mpesa
 
     access_token = oauth_generate_token(consumer_key="Consumer Key", consumer_secret="Consumer Secret", grant_type="client_credentials", env="sandbox")
 
