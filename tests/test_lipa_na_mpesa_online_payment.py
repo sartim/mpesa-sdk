@@ -1,23 +1,22 @@
-import os
-
-from mpesa_sdk.helpers import utils
 from tests.base import BaseTest
 
 
 class TestLipaNaMpesaOnlinePayment(BaseTest):
     def test_successful_lipa_na_mpesa_online_payment_api(self):
+        amount = 10
         data = {
-          "BusinessShortCode": os.environ.get("SAFARICOM_PAY_BILL"),
-          "Password": "",
-          "Timestamp": "",
-          "TransactionType": "CustomerPayBillOnline",
-          "Amount": "",
-          "PartyA": "",
-          "PartyB": "",
-          "PhoneNumber": "",
-          "CallBackURL": "",
-          "AccountReference": "",
-          "TransactionDesc": ""
+            "BusinessShortCode": self.short_code,
+            "Password": self.password,
+            "Timestamp": self.current_timestamp,
+            "TransactionType": "CustomerPayBillOnline",
+            "Amount": amount,
+            "PartyA": self.mobile_number,
+            "PartyB": self.short_code,
+            "PhoneNumber": self.mobile_number,
+            "CallBackURL": self.callback_url,
+            "AccountReference": "You are being charged {} for the item {}".format(
+                amount, "Test"),
+            "TransactionDesc": "CustomerBuyGoodsOnline"
         }
         body, status_code = self.instance.lipa_na_mpesa_online_payment(data)
         assert "MerchantRequestID" in body
