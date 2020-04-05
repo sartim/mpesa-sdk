@@ -1,4 +1,4 @@
-name: Publish Python Mpesa SDK distribution to PyPI
+name: test-build
 
 on:
   push:
