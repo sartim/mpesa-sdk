@@ -1,15 +1,15 @@
-import os
+import unittest
 import uuid
 
-from mpesa_sdk.helpers import utils
 from tests.base import BaseTest
 
 
 class TestLipaNaMpesaOnlineQuery(BaseTest):
+    @unittest.skip("Test with legit values")
     def test_successful_lipa_na_mpesa_online_query(self):
         data = {
             "BusinessShortCode": self.short_code,
-            "Password": self.password,
+            "Password": self.password.decode(),
             "Timestamp": self.current_timestamp,
             "CheckoutRequestID": str(uuid.uuid4())
         }
