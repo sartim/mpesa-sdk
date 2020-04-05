@@ -64,10 +64,7 @@ class Mpesa:
         payload = process_data(expected_keys, data)
         url = urls.get_b2b_payment_request_url(self.env)
         req = self.make_request(url, payload, "POST")
-        if req:
-            return req.json(), req.status_code
-        logger.warning("B2B payment request has not been completed")
-        return {"message": "Request was not completed"}, 500
+        return req.json(), req.status_code
 
     def b2c_payment_request(self, data):
         """
@@ -85,10 +82,7 @@ class Mpesa:
         payload = process_data(expected_keys, data)
         url = urls.get_b2c_payment_request_url(self.env)
         req = self.make_request(url, payload, "POST")
-        if req:
-            return req.json(), req.status_code
-        logger.warning("B2C payment request has not been completed")
-        return {"message": "Request was not completed"}, 500
+        return req.json(), req.status_code
 
     def c2b_register_url(self, data):
         """
@@ -106,10 +100,7 @@ class Mpesa:
         payload = process_data(expected_keys, data)
         url = urls.get_c2b_register_url(self.env)
         req = self.make_request(url, payload, "POST")
-        if req:
-            return req.json(), req.status_code
-        logger.warning("C2B register url request has not been completed")
-        return {"message": "Request was not completed"}, 500
+        return req.json(), req.status_code
 
     def c2b_simulate_transaction(self, data):
         """
@@ -125,11 +116,7 @@ class Mpesa:
         payload["CommandID"] = "CustomerPayBillOnline"
         url = urls.get_c2b_simulate_url(self.env)
         req = self.make_request(url, payload, "POST")
-        if req:
-            return req.json(), req.status_code
-        logger.warning(
-            "C2B simulate transaction request has not been completed")
-        return {"message": "Request was not completed"}, 500
+        return req.json(), req.status_code
 
     def transation_status_request(self, data):
         """
@@ -148,13 +135,8 @@ class Mpesa:
         payload["CommandID"] = "TransactionStatusQuery"
         payload["IdentifierType"] = "1"
         url = urls.get_transaction_status_url(self.env)
-        req = self.make_request(
-            url, payload,
-            "POST")
-        if req:
-            return req.json(), req.status_code
-        logger.warning("Transaction status request has not been completed")
-        return {"message": "Request was not completed"}, 500
+        req = self.make_request(url, payload, "POST")
+        return req.json(), req.status_code
 
     def account_balance_request(self, data):
         """
@@ -218,10 +200,7 @@ class Mpesa:
         payload["Timestamp"] = generate_timestamp()
         url = urls.get_stk_push_query_url(self.env)
         req = self.make_request(url, payload, "POST")
-        if req:
-            return req.json(), req.status_code
-        logger.warning("Mpesa express query request has not been completed")
-        return {"message": "Request was not completed"}, 500
+        return req.json(), req.status_code
 
     def lipa_na_mpesa_online_payment(self, data):
         """
@@ -243,10 +222,7 @@ class Mpesa:
         payload["TransactionType"] = "CustomerPayBillOnline"
         url = urls.get_stk_push_process_url(self.env)
         req = self.make_request(url, payload, "POST")
-        if req:
-            return req.json(), req.status_code
-        logger.error("Mpesa express request has not been completed")
-        return None, 500
+        return req.json(), req.status_code
 
 
 def oauth_generate_token(
@@ -269,10 +245,7 @@ def oauth_generate_token(
     req = requests.get(
         url, params=dict(grant_type=grant_type),
         auth=(consumer_key, consumer_secret))
-    if req:
-        return req.json(), req.status_code
-    logger.warning("Token not generated.")
-    return {"message": "Request was not completed"}, 500
+    return req.json(), req.status_code
 
 
 def encode_password(shortcode, passkey, timestamp):
