@@ -1,7 +1,10 @@
+import unittest
+
 from tests.base import BaseTest
 
 
 class TestLipaNaMpesaOnlinePayment(BaseTest):
+    @unittest.skip("Test with legit values")
     def test_successful_lipa_na_mpesa_online_payment_api(self):
         amount = 10
         data = {
