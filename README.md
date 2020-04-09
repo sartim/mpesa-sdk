@@ -29,4 +29,8 @@ Create .env file from [example](https://github.com/sartim/mpesa-sdk/blob/master/
     $ pip install pytest
     $ pytest
  
+To test for different python environments use
+    
+    $ tox
+ 
 Read more on [wiki](https://github.com/sartim/mpesa-sdk/wiki).
