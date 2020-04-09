@@ -31,6 +31,7 @@ Create .env file from [example](https://github.com/sartim/mpesa-sdk/blob/master/
  
 To test for different python environments use
     
+    $ pip install tox
     $ tox
  
 Read more on [wiki](https://github.com/sartim/mpesa-sdk/wiki).
