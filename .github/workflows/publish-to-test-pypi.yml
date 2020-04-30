@@ -37,6 +37,7 @@ jobs:
         SAFARICOM_SHORT_CODE: ${{ secrets.SAFARICOM_SHORT_CODE }}
         SAFARICOM_TEST_MOBILE_NUMBER: ${{ secrets.SAFARICOM_TEST_MOBILE_NUMBER }}
         SAFARICOM_CALL_BACK_URL: ${{ secrets.SAFARICOM_CALL_BACK_URL }}
+        SAFARICOM_LIPA_NA_MPESA_PASSKEY: ${{ secrets.SAFARICOM_LIPA_NA_MPESA_PASSKEY }}
     - name: Test with tox
       run: |
         pip install tox
@@ -49,6 +50,7 @@ jobs:
         SAFARICOM_SHORT_CODE: ${{ secrets.SAFARICOM_SHORT_CODE }}
         SAFARICOM_TEST_MOBILE_NUMBER: ${{ secrets.SAFARICOM_TEST_MOBILE_NUMBER }}
         SAFARICOM_CALL_BACK_URL: ${{ secrets.SAFARICOM_CALL_BACK_URL }}
+        SAFARICOM_LIPA_NA_MPESA_PASSKEY: ${{ secrets.SAFARICOM_LIPA_NA_MPESA_PASSKEY }}
     - name: Buid
       run: |
         python3 -m pip install --user --upgrade setuptools wheel
