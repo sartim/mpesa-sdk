@@ -26,4 +26,4 @@ def current_timestamp(ms=True):
 
 def convert_datetime_to_int(dt_time):
     """Convert date time object to integer"""
-    return 10000 * dt_time.year + 100 * dt_time.month + dt_time.day + dt_time.second
+    return int(dt_time.strftime("%Y%m%d%H%M%S"))
