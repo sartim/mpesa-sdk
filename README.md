@@ -1,6 +1,6 @@
 **MPESA REST SDK**
 
-[![Language](https://img.shields.io/badge/language-python-green.svg)](https://github.com/sartim/flask_shop_api)
+[![Language](https://img.shields.io/badge/language-python-green.svg)](https://github.com/sartim/mpesa-sdk)
 ![Build Status](https://github.com/sartim/mpesa-sdk/workflows/Publish%20Python%20Mpesa%20SDK%20distribution%20to%20PyPI/badge.svg)
 
 Pure python sdk for [MPESA API](https://developer.safaricom.co.ke/docs#authentication).
