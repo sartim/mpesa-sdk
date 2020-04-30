@@ -13,8 +13,8 @@ class BaseTest:
     def setup_class(cls):
         current_date_time = datetime.datetime.today()
         cls.passkey = os.environ.get("SAFARICOM_LIPA_NA_MPESA_PASSKEY")
-        cls.consumer_key = os.environ.get("CONSUMER_KEY")
-        cls.consumer_secret = os.environ.get("CONSUMER_SECRET")
+        cls.consumer_key = os.environ.get("SAFARICOM_CONSUMER_KEY")
+        cls.consumer_secret = os.environ.get("SAFARICOM_CONSUMER_SECRET")
         cls.short_code = int(os.environ.get("SAFARICOM_SHORT_CODE"))
         cls.mobile_number = os.environ.get("SAFARICOM_TEST_MOBILE_NUMBER")
         cls.current_timestamp = str(utils.convert_datetime_to_int(current_date_time))
