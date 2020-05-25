@@ -1,4 +1,4 @@
-name: Publish Python Mpesa SDK distribution to PyPI
+name: build
 
 on:
   push:
@@ -25,6 +25,32 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        pip install pytest
+        pytest
+      env:
+        ENV: ${{ secrets.ENV }}
+        SAFARICOM_PROD_URL: ${{ secrets.SAFARICOM_PROD_URL }}
+        SAFARICOM_CONSUMER_KEY: ${{ secrets.SAFARICOM_CONSUMER_KEY }}
+        SAFARICOM_CONSUMER_SECRET: ${{ secrets.SAFARICOM_CONSUMER_SECRET }}
+        SAFARICOM_SHORT_CODE: ${{ secrets.SAFARICOM_SHORT_CODE }}
+        SAFARICOM_TEST_MOBILE_NUMBER: ${{ secrets.SAFARICOM_TEST_MOBILE_NUMBER }}
+        SAFARICOM_CALL_BACK_URL: ${{ secrets.SAFARICOM_CALL_BACK_URL }}
+        SAFARICOM_LIPA_NA_MPESA_PASSKEY: ${{ secrets.SAFARICOM_LIPA_NA_MPESA_PASSKEY }}
+    - name: Test with tox
+      run: |
+        pip install tox
+        tox
+      env:
+        ENV: ${{ secrets.ENV }}
+        SAFARICOM_PROD_URL: ${{ secrets.SAFARICOM_PROD_URL }}
+        SAFARICOM_CONSUMER_KEY: ${{ secrets.SAFARICOM_CONSUMER_KEY }}
+        SAFARICOM_CONSUMER_SECRET: ${{ secrets.SAFARICOM_CONSUMER_SECRET }}
+        SAFARICOM_SHORT_CODE: ${{ secrets.SAFARICOM_SHORT_CODE }}
+        SAFARICOM_TEST_MOBILE_NUMBER: ${{ secrets.SAFARICOM_TEST_MOBILE_NUMBER }}
+        SAFARICOM_CALL_BACK_URL: ${{ secrets.SAFARICOM_CALL_BACK_URL }}
+        SAFARICOM_LIPA_NA_MPESA_PASSKEY: ${{ secrets.SAFARICOM_LIPA_NA_MPESA_PASSKEY }}
     - name: Buid
       run: |
         python3 -m pip install --user --upgrade setuptools wheel

@@ -1,13 +1,11 @@
 from setuptools import setup, find_packages
 
-from version import VERSION
-
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
     name='mpesa-sdk',
-    version=VERSION,
+    version="1.0.4",
     description='Mpesa API SDK',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -29,7 +27,6 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.2",
@@ -40,6 +37,5 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Software Development :: Libraries :: Python Modules",
-    ],
-    python_requires='>=3.7',
+    ]
 )
