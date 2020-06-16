@@ -37,15 +37,17 @@ class Mpesa:
         :param method:
         :return response (obj):
         """
-        if self.timeout:
-            return requests.request(
+        try:
+            req = requests.request(
                 method, url, headers=self.headers,
                 json=payload,
-                timeout=self.timeout)
+                timeout=self.timeout
+            )
+        except Exception as e:
+            logger.exception("Error in {} request. {}".format(url, str(e)))
+            return None
         else:
-            return requests.request(
-                method, url, headers=self.headers,
-                json=payload)
+            return req
 
     def b2b_payment_request(self, data):
         """
@@ -238,14 +240,19 @@ def oauth_generate_token(
     :param consumer_secret:
     :param grant_type:
     :param env:
-    :param version:
     :return response:
     """
     url = urls.get_generate_token_url(env)
-    req = requests.get(
-        url, params=dict(grant_type=grant_type),
-        auth=(consumer_key, consumer_secret))
-    return req.json(), req.status_code
+    try:
+        req = requests.get(
+            url, params=dict(grant_type=grant_type),
+            auth=(consumer_key, consumer_secret))
+    except Exception as e:
+        logger.exception("Error in {} request. {}".format(url, str(e)))
+        return None, None
+    else:
+        return req.json(), req.status_code
+
 
 
 def encode_password(shortcode, passkey, timestamp):
