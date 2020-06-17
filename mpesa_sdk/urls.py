@@ -7,7 +7,7 @@ def get_base_url(env):
     if env == "sandbox":
         base_url = SANDBOX_BASE_URL
     else:
-        base_url = os.environ.get("PROD_URL")
+        base_url = os.environ.get("SAFARICOM_PROD_URL")
     return base_url
 
 
