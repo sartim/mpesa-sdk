@@ -1,13 +1,12 @@
-import os
-
 SANDBOX_BASE_URL = "https://sandbox.safaricom.co.ke"
+PROD_BASE_URL = "https://api.safaricom.co.ke"
 
 
 def get_base_url(env):
     if env == "sandbox":
         base_url = SANDBOX_BASE_URL
     else:
-        base_url = os.environ.get("SAFARICOM_PROD_URL")
+        base_url = PROD_BASE_URL
     return base_url
 
 
