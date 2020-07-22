@@ -26,8 +26,8 @@ class TestStkPush(BaseTest):
             "ResponseDescription": "Success. Request accepted for processing",
             "CustomerMessage": "Success. Request accepted for processing"
         }
-        # self.instance.lipa_na_mpesa_online_payment = MagicMock(
-        #     return_value=(result, 200))
+        self.instance.lipa_na_mpesa_online_payment = MagicMock(
+            return_value=(result, 200))
         body, status_code = self.instance.lipa_na_mpesa_online_payment(data)
         assert "MerchantRequestID" in body
         assert "CheckoutRequestID" in body
