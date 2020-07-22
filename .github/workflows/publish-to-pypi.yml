@@ -31,7 +31,6 @@ jobs:
         pytest
       env:
         ENV: ${{ secrets.ENV }}
-        SAFARICOM_PROD_URL: ${{ secrets.SAFARICOM_PROD_URL }}
         SAFARICOM_CONSUMER_KEY: ${{ secrets.SAFARICOM_CONSUMER_KEY }}
         SAFARICOM_CONSUMER_SECRET: ${{ secrets.SAFARICOM_CONSUMER_SECRET }}
         SAFARICOM_SHORT_CODE: ${{ secrets.SAFARICOM_SHORT_CODE }}
@@ -44,7 +43,6 @@ jobs:
         tox
       env:
         ENV: ${{ secrets.ENV }}
-        SAFARICOM_PROD_URL: ${{ secrets.SAFARICOM_PROD_URL }}
         SAFARICOM_CONSUMER_KEY: ${{ secrets.SAFARICOM_CONSUMER_KEY }}
         SAFARICOM_CONSUMER_SECRET: ${{ secrets.SAFARICOM_CONSUMER_SECRET }}
         SAFARICOM_SHORT_CODE: ${{ secrets.SAFARICOM_SHORT_CODE }}
