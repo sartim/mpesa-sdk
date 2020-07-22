@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='mpesa-sdk',
-    version="1.0.7",
+    version="1.0.8",
     description='Mpesa API SDK',
     long_description=long_description,
     long_description_content_type="text/markdown",
