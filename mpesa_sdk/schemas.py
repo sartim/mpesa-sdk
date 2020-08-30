@@ -8,7 +8,7 @@ class AuthSchema(Schema):
     env = fields.Str(required=True, default="sandbox")
 
 
-class LipaPayment(Schema):
+class LipaPaymentSchema(Schema):
     BusinessShortCode = fields.Int(required=True)
     Password = fields.Str(required=True)
     Amount = fields.Int(required=True)
@@ -22,8 +22,20 @@ class LipaPayment(Schema):
     Timestamp = fields.Str(required=True)
 
 
-class LipaQuery(Schema):
+class LipaQuerySchema(Schema):
     BusinessShortCode = fields.Int(required=True)
     Password = fields.Str(required=True)
     Timestamp = fields.Str(required=True)
     CheckoutRequestID = fields.Str(required=True)
+
+
+class ReversalSchema(Schema):
+    Initiator = fields.Str(required=True)
+    SecurityCredential = fields.Str(required=True)
+    TransactionID = fields.Str(required=True)
+    Amount = fields.Str(required=True)
+    ReceiverParty = fields.Str(required=True)
+    ResultURL = fields.Str(required=True)
+    QueueTimeOutURL = fields.Str(required=True)
+    Remarks = fields.Str(required=True)
+    Occasion = fields.Str(required=True)
