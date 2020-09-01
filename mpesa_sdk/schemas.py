@@ -48,3 +48,14 @@ class AccountBalanceSchema(Schema):
     Remarks = fields.Str(required=True)
     QueueTimeOutURL = fields.Str(required=True)
     ResultURL = fields.Str(required=True)
+
+
+class TransactionStatusSchema(Schema):
+    Initiator = fields.Str(required=True)
+    SecurityCredential = fields.Str(required=True)
+    TransactionID = fields.Str(required=True)
+    PartyA = fields.Str(required=True)
+    ResultURL = fields.Str(required=True)
+    QueueTimeOutURL = fields.Str(required=True)
+    Remarks = fields.Str(required=True)
+    Occasion = fields.Str(required=True)
