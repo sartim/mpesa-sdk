@@ -59,3 +59,9 @@ class TransactionStatusSchema(Schema):
     QueueTimeOutURL = fields.Str(required=True)
     Remarks = fields.Str(required=True)
     Occasion = fields.Str(required=True)
+
+
+class C2BSimulateTransactionSchema(Schema):
+    ShortCode = fields.Int(required=True)
+    Amount = fields.Int(required=True)
+    Msisdn = fields.Str(required=True)
