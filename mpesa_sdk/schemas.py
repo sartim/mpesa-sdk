@@ -61,6 +61,13 @@ class TransactionStatusSchema(Schema):
     Occasion = fields.Str(required=True)
 
 
+class C2BRegisterUrlSchema(Schema):
+    ShortCode = fields.Int(required=True)
+    ResponseType = fields.Int(required=True)
+    ConfirmationURL = fields.Str(required=True)
+    ValidationURL = fields.Str(required=True)
+
+
 class C2BSimulateTransactionSchema(Schema):
     ShortCode = fields.Int(required=True)
     Amount = fields.Int(required=True)
