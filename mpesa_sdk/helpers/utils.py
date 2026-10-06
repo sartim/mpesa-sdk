@@ -1,14 +1,16 @@
-import logging
 import base64
+import logging
 import time
+
+logger = logging.getLogger(__name__)
 
 
 def encode_string(txt):
     """Base64 Encode String"""
     try:
         encoded_string = base64.b64encode(txt.encode())
-    except Exception as e:
-        logging.error(str(e))
+    except (AttributeError, TypeError, UnicodeError) as error:
+        logger.error("Could not encode value as Base64: %s", error)
     else:
         return encoded_string
     return False

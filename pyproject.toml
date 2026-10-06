@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mpesa-sdk"
+version = "1.1.0"
+description = "Python client for Safaricom Daraja APIs"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+authors = [{ name = "sartim" }]
+dependencies = ["requests>=2.31,<3"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/sartim/mpesa-sdk"
+Repository = "https://github.com/sartim/mpesa-sdk"
+Issues = "https://github.com/sartim/mpesa-sdk/issues"
+
+[project.optional-dependencies]
+test = ["pytest>=8,<9", "ruff>=0.12,<1"]
+
+[tool.setuptools.packages.find]
+include = ["mpesa_sdk*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"

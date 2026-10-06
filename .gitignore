@@ -19,6 +19,9 @@ var/
 .installed.cfg
 *.egg
 /CACHE
+/build/
+/dist/
+/uv.lock
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -33,6 +36,9 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
+.venv/
+.ruff_cache/
+.pytest_cache/
 .coverage
 .coverage.*
 .cache
