@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timezone
+from importlib.metadata import version
 from unittest.mock import Mock
 
 import pytest
@@ -31,7 +32,7 @@ def make_response(body, status_code=200):
 def test_install_and_import_names_are_stable():
     import mpesa_sdk
 
-    assert mpesa_sdk.__version__ == "1.1.0"
+    assert mpesa_sdk.__version__ == version("mpesa-sdk")
     assert Mpesa is mpesa_sdk.Mpesa
 
 
