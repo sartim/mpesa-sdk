@@ -285,3 +285,109 @@ def test_process_data_does_not_mutate_and_accepts_zero():
     original = data.copy()
     assert process_data(("Amount", "Reference"), data) == original
     assert data == original
+
+
+@pytest.mark.parametrize(
+    ("method_name", "data", "endpoint", "added_fields"),
+    [
+        (
+            "b2b_payment_request",
+            {
+                "Initiator": "api-user",
+                "SecurityCredential": "encrypted",
+                "CommandID": "BusinessPayBill",
+                "SenderIdentifierType": "4",
+                "RecieverIdentifierType": "4",
+                "Amount": 10,
+                "PartyA": "600000",
+                "PartyB": "600001",
+                "AccountReference": "INV-1",
+                "Remarks": "Supplier payment",
+                "QueueTimeOutURL": "https://example.invalid/timeout",
+                "ResultURL": "https://example.invalid/result",
+            },
+            "/mpesa/b2b/v1/paymentrequest",
+            {},
+        ),
+        (
+            "b2c_payment_request",
+            {
+                "InitiatorName": "api-user",
+                "SecurityCredential": "encrypted",
+                "CommandID": "SalaryPayment",
+                "Amount": 10,
+                "PartyA": "600000",
+                "PartyB": "254700000000",
+                "Remarks": "Salary",
+                "QueueTimeOutURL": "https://example.invalid/timeout",
+                "ResultURL": "https://example.invalid/result",
+                "Occasion": "Payroll",
+            },
+            "/mpesa/b2c/v1/paymentrequest",
+            {},
+        ),
+        (
+            "c2b_register_url",
+            {
+                "ShortCode": "600000",
+                "ResponseType": "Completed",
+                "ConfirmationURL": "https://example.invalid/confirm",
+                "ValidationURL": "https://example.invalid/validate",
+            },
+            "/mpesa/c2b/v1/registerurl",
+            {},
+        ),
+        (
+            "c2b_simulate_transaction",
+            {"ShortCode": "600000", "Amount": 10, "Msisdn": "254700000000"},
+            "/mpesa/c2b/v1/simulate",
+            {"CommandID": "CustomerPayBillOnline"},
+        ),
+        (
+            "account_balance_request",
+            {
+                "Initiator": "api-user",
+                "SecurityCredential": "encrypted",
+                "PartyA": "600000",
+                "Remarks": "Reconcile account",
+                "QueueTimeOutURL": "https://example.invalid/timeout",
+                "ResultURL": "https://example.invalid/result",
+            },
+            "/mpesa/accountbalance/v1/query",
+            {"CommandID": "AccountBalance", "IdentifierType": "4"},
+        ),
+        (
+            "reversal_request",
+            {
+                "Initiator": "api-user",
+                "SecurityCredential": "encrypted",
+                "TransactionID": "ABC123",
+                "Amount": 10,
+                "ReceiverParty": "600000",
+                "ResultURL": "https://example.invalid/result",
+                "QueueTimeOutURL": "https://example.invalid/timeout",
+                "Remarks": "Reverse duplicate payment",
+                "Occasion": "INV-1",
+            },
+            "/mpesa/reversal/v1/request",
+            {"CommandID": "TransactionReversal", "RecieverIdentifierType": "4"},
+        ),
+    ],
+)
+def test_additional_endpoint_wrappers_send_payload_without_mutating_input(
+    monkeypatch, method_name, data, endpoint, added_fields
+):
+    request = Mock(return_value=make_response({"ResponseCode": "0"}))
+    monkeypatch.setattr(requests, "request", request)
+    client = Mpesa("token", env="sandbox")
+    original = data.copy()
+
+    body, status = getattr(client, method_name)(data)
+
+    assert body["ResponseCode"] == "0"
+    assert status == 200
+    assert data == original
+    assert request.call_args.args == ("POST", f"https://sandbox.safaricom.co.ke{endpoint}")
+    assert request.call_args.kwargs["json"] == {**original, **added_fields}
+    assert request.call_args.kwargs["headers"] == {"Authorization": "Bearer token"}
+    assert request.call_args.kwargs["timeout"] == 10.0
