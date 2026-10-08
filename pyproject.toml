@@ -31,7 +31,7 @@ Repository = "https://github.com/sartim/mpesa-sdk"
 Issues = "https://github.com/sartim/mpesa-sdk/issues"
 
 [project.optional-dependencies]
-test = ["pytest>=8,<9", "ruff>=0.12,<1"]
+test = ["pytest>=8,<10", "ruff>=0.12,<1"]
 release = ["python-semantic-release>=10.7,<11"]
 
 [tool.setuptools.packages.find]
