@@ -32,6 +32,7 @@ Issues = "https://github.com/sartim/mpesa-sdk/issues"
 
 [project.optional-dependencies]
 test = ["pytest>=8,<9", "ruff>=0.12,<1"]
+release = ["python-semantic-release>=10.7,<11"]
 
 [tool.setuptools.packages.find]
 include = ["mpesa_sdk*"]
@@ -42,3 +43,16 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py39"
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+version_variables = ["mpesa_sdk/__init__.py:__version__"]
+commit_parser = "conventional"
+tag_format = "v{version}"
+
+[tool.semantic_release.branches.main]
+match = "master"
+prerelease = false
+
+[tool.semantic_release.changelog.default_templates]
+changelog_file = "CHANGELOG.md"
