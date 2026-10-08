@@ -18,17 +18,30 @@ For local development and tests:
 python -m pip install 'mpesa-sdk[test]'
 ```
 
-## Supported API names
+## Supported API operations
 
-The client uses current Daraja API terminology for M-Pesa Express and
-Transaction Status:
+The SDK is a thin HTTP wrapper: pass the Daraja request fields, and receive
+the decoded response and HTTP status. It does not manage payment state or
+process the asynchronous results sent to your callback URLs.
 
-| Daraja capability | SDK method |
-| --- | --- |
-| M-Pesa Express (STK Push) | `Mpesa.mpesa_express_payment(data)` |
-| M-Pesa Express query | `Mpesa.mpesa_express_query(data)` |
-| Transaction Status query | `Mpesa.transaction_status_request(data)` |
-| OAuth token | `oauth_generate_token(...)` |
+| Daraja operation | SDK method | Required payload fields |
+| --- | --- | --- |
+| OAuth token | `oauth_generate_token(consumer_key, consumer_secret)` | Consumer key and secret |
+| M-Pesa Express (STK Push) | `Mpesa.mpesa_express_payment(data)` | `BusinessShortCode`, `Password`, `Amount`, `PartyA`, `PartyB`, `PhoneNumber`, `CallBackURL`, `AccountReference`, `TransactionDesc` |
+| M-Pesa Express query | `Mpesa.mpesa_express_query(data)` | `BusinessShortCode`, `Password`, `CheckoutRequestID` |
+| Transaction Status query | `Mpesa.transaction_status_request(data)` | `Initiator`, `SecurityCredential`, `PartyA`, `ResultURL`, `QueueTimeOutURL`, `Remarks`, and exactly one of `TransactionID` or `OriginalConversationID` |
+| B2B payment | `Mpesa.b2b_payment_request(data)` | `Initiator`, `SecurityCredential`, `CommandID`, `SenderIdentifierType`, `RecieverIdentifierType`, `Amount`, `PartyA`, `PartyB`, `AccountReference`, `Remarks`, `QueueTimeOutURL`, `ResultURL` |
+| B2C payment | `Mpesa.b2c_payment_request(data)` | `InitiatorName`, `SecurityCredential`, `CommandID`, `Amount`, `PartyA`, `PartyB`, `Remarks`, `QueueTimeOutURL`, `ResultURL`, `Occasion` |
+| C2B URL registration | `Mpesa.c2b_register_url(data)` | `ShortCode`, `ResponseType`, `ConfirmationURL`, `ValidationURL` |
+| C2B simulation | `Mpesa.c2b_simulate_transaction(data)` | `ShortCode`, `Amount`, `Msisdn` |
+| Account balance | `Mpesa.account_balance_request(data)` | `Initiator`, `SecurityCredential`, `PartyA`, `Remarks`, `QueueTimeOutURL`, `ResultURL` |
+| Transaction reversal | `Mpesa.reversal_request(data)` | `Initiator`, `SecurityCredential`, `TransactionID`, `Amount`, `ReceiverParty`, `ResultURL`, `QueueTimeOutURL`, `Remarks`, `Occasion` |
+
+The client supplies `CommandID` for C2B simulation, account balance, and
+reversal. It also supplies an East Africa timestamp for M-Pesa Express calls;
+STK Push defaults `TransactionType` to `CustomerPayBillOnline`, and
+Transaction Status defaults `IdentifierType` to `4`. Set optional or
+operation-specific fields according to the Daraja API account and request.
 
 Compatibility methods remain available for existing users:
 
