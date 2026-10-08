@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v1.2.0 (2026-10-08)
+
+### Features
+
+- Add manual sandbox OAuth smoke check
+  ([`ebf2d43`](https://github.com/sartim/mpesa-sdk/commit/ebf2d435507c693d753d0d8e03a5bee9c5a90a97))
+
+### Testing
+
+- Cover all wrapped Daraja endpoints
+  ([`7d1a98e`](https://github.com/sartim/mpesa-sdk/commit/7d1a98e9ea4a13da98595fa06b2647285eba74e1))
+
+
 ## v1.1.0 (2026-10-08)
 
 ### Build System

@@ -28,4 +28,4 @@ __all__ = [
     "oauth_generate_token",
 ]
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
