@@ -149,6 +149,15 @@ ruff check .
 ruff format --check .
 ```
 
+### Releases
+
+Merging changes to `master` runs CI first. If CI passes, Python Semantic
+Release reads Conventional Commit messages to decide whether to make a release,
+updates the project version and changelog, creates a GitHub release, and
+publishes the package to PyPI. Use `feat:` for new features, `fix:` for bug
+fixes, and `!` or a `BREAKING CHANGE:` footer for breaking changes. Prefix
+non-release changes with types such as `docs:`, `chore:`, or `test:`.
+
 ## License
 
 MIT
