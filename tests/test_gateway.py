@@ -306,13 +306,16 @@ def test_process_data_does_not_mutate_and_accepts_zero():
                 "Remarks": "Supplier payment",
                 "QueueTimeOutURL": "https://example.invalid/timeout",
                 "ResultURL": "https://example.invalid/result",
+                "Requester": "254700000000",
+                "Occassion": "Supplier invoice",
             },
             "/mpesa/b2b/v1/paymentrequest",
-            {},
+            {"Requester": "254700000000", "Occassion": "Supplier invoice"},
         ),
         (
             "b2c_payment_request",
             {
+                "OriginatorConversationID": "merchant-request-1",
                 "InitiatorName": "api-user",
                 "SecurityCredential": "encrypted",
                 "CommandID": "SalaryPayment",
@@ -322,9 +325,9 @@ def test_process_data_does_not_mutate_and_accepts_zero():
                 "Remarks": "Salary",
                 "QueueTimeOutURL": "https://example.invalid/timeout",
                 "ResultURL": "https://example.invalid/result",
-                "Occasion": "Payroll",
+                "Occassion": "Payroll",
             },
-            "/mpesa/b2c/v1/paymentrequest",
+            "/mpesa/b2c/v3/paymentrequest",
             {},
         ),
         (
@@ -340,9 +343,15 @@ def test_process_data_does_not_mutate_and_accepts_zero():
         ),
         (
             "c2b_simulate_transaction",
-            {"ShortCode": "600000", "Amount": 10, "Msisdn": "254700000000"},
+            {
+                "ShortCode": "600000",
+                "Amount": 10,
+                "Msisdn": "254700000000",
+                "CommandID": "CustomerBuyGoodsOnline",
+                "BillRefNumber": "INV-1",
+            },
             "/mpesa/c2b/v1/simulate",
-            {"CommandID": "CustomerPayBillOnline"},
+            {"CommandID": "CustomerBuyGoodsOnline", "BillRefNumber": "INV-1"},
         ),
         (
             "account_balance_request",

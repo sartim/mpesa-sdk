@@ -31,17 +31,21 @@ process the asynchronous results sent to your callback URLs.
 | M-Pesa Express query | `Mpesa.mpesa_express_query(data)` | `BusinessShortCode`, `Password`, `CheckoutRequestID` |
 | Transaction Status query | `Mpesa.transaction_status_request(data)` | `Initiator`, `SecurityCredential`, `PartyA`, `ResultURL`, `QueueTimeOutURL`, `Remarks`, and exactly one of `TransactionID` or `OriginalConversationID` |
 | B2B payment | `Mpesa.b2b_payment_request(data)` | `Initiator`, `SecurityCredential`, `CommandID`, `SenderIdentifierType`, `RecieverIdentifierType`, `Amount`, `PartyA`, `PartyB`, `AccountReference`, `Remarks`, `QueueTimeOutURL`, `ResultURL` |
-| B2C payment | `Mpesa.b2c_payment_request(data)` | `InitiatorName`, `SecurityCredential`, `CommandID`, `Amount`, `PartyA`, `PartyB`, `Remarks`, `QueueTimeOutURL`, `ResultURL`, `Occasion` |
+| B2C payment (Daraja v3) | `Mpesa.b2c_payment_request(data)` | `OriginatorConversationID`, `InitiatorName`, `SecurityCredential`, `CommandID`, `Amount`, `PartyA`, `PartyB`, `Remarks`, `QueueTimeOutURL`, `ResultURL`; optional `Occassion` |
 | C2B URL registration | `Mpesa.c2b_register_url(data)` | `ShortCode`, `ResponseType`, `ConfirmationURL`, `ValidationURL` |
-| C2B simulation | `Mpesa.c2b_simulate_transaction(data)` | `ShortCode`, `Amount`, `Msisdn` |
+| C2B simulation | `Mpesa.c2b_simulate_transaction(data)` | `ShortCode`, `Amount`, `Msisdn`; optional `CommandID` and `BillRefNumber` |
 | Account balance | `Mpesa.account_balance_request(data)` | `Initiator`, `SecurityCredential`, `PartyA`, `Remarks`, `QueueTimeOutURL`, `ResultURL` |
 | Transaction reversal | `Mpesa.reversal_request(data)` | `Initiator`, `SecurityCredential`, `TransactionID`, `Amount`, `ReceiverParty`, `ResultURL`, `QueueTimeOutURL`, `Remarks`, `Occasion` |
 
-The client supplies `CommandID` for C2B simulation, account balance, and
-reversal. It also supplies an East Africa timestamp for M-Pesa Express calls;
-STK Push defaults `TransactionType` to `CustomerPayBillOnline`, and
-Transaction Status defaults `IdentifierType` to `4`. Set optional or
-operation-specific fields according to the Daraja API account and request.
+The C2B simulator defaults `CommandID` to `CustomerPayBillOnline`; set it to
+`CustomerBuyGoodsOnline` for a till payment. `BillRefNumber` is optional and
+is used for paybill simulations. The client supplies `CommandID` for account
+balance and reversal. B2B requests can include the optional `Requester` and
+`Occassion` fields. The client also supplies an East Africa timestamp for
+M-Pesa Express calls; STK Push defaults `TransactionType` to
+`CustomerPayBillOnline`, and Transaction Status defaults `IdentifierType` to
+`4`. Set optional or operation-specific fields according to the Daraja API
+account and request.
 
 Compatibility methods remain available for existing users:
 
