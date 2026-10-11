@@ -313,6 +313,7 @@ def test_process_data_does_not_mutate_and_accepts_zero():
         (
             "b2c_payment_request",
             {
+                "OriginatorConversationID": "merchant-request-1",
                 "InitiatorName": "api-user",
                 "SecurityCredential": "encrypted",
                 "CommandID": "SalaryPayment",
@@ -322,9 +323,9 @@ def test_process_data_does_not_mutate_and_accepts_zero():
                 "Remarks": "Salary",
                 "QueueTimeOutURL": "https://example.invalid/timeout",
                 "ResultURL": "https://example.invalid/result",
-                "Occasion": "Payroll",
+                "Occassion": "Payroll",
             },
-            "/mpesa/b2c/v1/paymentrequest",
+            "/mpesa/b2c/v3/paymentrequest",
             {},
         ),
         (

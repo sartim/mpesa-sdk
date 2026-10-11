@@ -156,9 +156,11 @@ class Mpesa:
         return self._request_json(urls.get_b2b_payment_request_url(self.env), payload)
 
     def b2c_payment_request(self, data: Mapping[str, Any]):
+        """Submit a B2C payment using Daraja v3."""
         payload = _required_payload(
             data,
             (
+                "OriginatorConversationID",
                 "InitiatorName",
                 "SecurityCredential",
                 "CommandID",
@@ -168,9 +170,11 @@ class Mpesa:
                 "Remarks",
                 "QueueTimeOutURL",
                 "ResultURL",
-                "Occasion",
             ),
         )
+        occasion = data.get("Occassion", data.get("Occasion"))
+        if occasion not in (None, ""):
+            payload["Occassion"] = occasion
         return self._request_json(urls.get_b2c_payment_request_url(self.env), payload)
 
     def c2b_register_url(self, data: Mapping[str, Any]):

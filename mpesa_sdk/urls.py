@@ -38,7 +38,7 @@ def get_reversal_request_url(env="sandbox"):
 
 def get_b2c_payment_request_url(env="sandbox"):
     base_url = get_base_url(env)
-    return f"{base_url}/mpesa/b2c/v1/paymentrequest"
+    return f"{base_url}/mpesa/b2c/v3/paymentrequest"
 
 
 def get_b2b_payment_request_url(env="sandbox"):
