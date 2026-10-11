@@ -2,6 +2,35 @@
 
 <!-- version list -->
 
+## v2.0.0 (2026-10-11)
+
+### Bug Fixes
+
+- Pass optional Daraja request fields
+  ([`1c1c85e`](https://github.com/sartim/mpesa-sdk/commit/1c1c85e37db1308a2c45b97efcc525a82cd1008a))
+
+### Chores
+
+- Configure weekly dependency updates ([#41](https://github.com/sartim/mpesa-sdk/pull/41),
+  [`c175df1`](https://github.com/sartim/mpesa-sdk/commit/c175df19040279fad09733b3dc33ff619f4b7760))
+
+- Keep package version assertion current ([#41](https://github.com/sartim/mpesa-sdk/pull/41),
+  [`c175df1`](https://github.com/sartim/mpesa-sdk/commit/c175df19040279fad09733b3dc33ff619f4b7760))
+
+- Update workflow actions and pytest range ([#47](https://github.com/sartim/mpesa-sdk/pull/47),
+  [`a028937`](https://github.com/sartim/mpesa-sdk/commit/a028937f284331134726781c348ff91aeceda806))
+
+### Features
+
+- Update B2C wrapper to Daraja v3
+  ([`15c0f68`](https://github.com/sartim/mpesa-sdk/commit/15c0f683f049c86532620775ed957ce434281bf4))
+
+### Breaking Changes
+
+- B2C requests now use the v3 endpoint and require OriginatorConversationID. The callback occasion
+  field is sent as Occassion; the former Occasion spelling remains accepted as an input alias.
+
+
 ## v1.2.0 (2026-10-08)
 
 ### Features
